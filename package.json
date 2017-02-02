@@ -1,0 +1,23 @@
+{
+  "name": "yelpcamp",
+  "version": "1.0.0",
+  "description": "Bootcamp Yelpcamp project",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maicongil/bootcamp_yelpcamp.git"
+  },
+  "author": "maicongil",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/maicongil/bootcamp_yelpcamp/issues"
+  },
+  "homepage": "https://github.com/maicongil/bootcamp_yelpcamp#readme",
+  "dependencies": {
+    "ejs": "^2.5.5",
+    "express": "^4.14.1"
+  }
+}
