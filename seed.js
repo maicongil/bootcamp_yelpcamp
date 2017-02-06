@@ -6,17 +6,17 @@ var campgrounds = [
     {
         name : "Lake View",
         image : "https://farm3.staticflickr.com/2923/13950231147_7032e443a0.jpg",
-        description : "Nice lake view"
+        description : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam mauris urna, pretium non metus vitae, auctor aliquam nibh. Sed ut mauris auctor, pretium diam at, posuere libero. Nullam finibus libero est, sed faucibus neque lobortis ut. Sed mi ipsum, congue in placerat non, vestibulum sit amet est. Maecenas ac dui vitae risus dignissim facilisis ac at ipsum. Donec gravida eleifend auctor. Pellentesque sit amet elementum purus. Vivamus vitae mi id tellus sodales rutrum."
     },
     {
         name : "Mountain Foot",
         image : "https://farm3.staticflickr.com/2054/2229707213_302c00f6b5.jpg",
-        description : "Spetacular spot"
+        description : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam mauris urna, pretium non metus vitae, auctor aliquam nibh. Sed ut mauris auctor, pretium diam at, posuere libero. Nullam finibus libero est, sed faucibus neque lobortis ut. Sed mi ipsum, congue in placerat non, vestibulum sit amet est. Maecenas ac dui vitae risus dignissim facilisis ac at ipsum. Donec gravida eleifend auctor. Pellentesque sit amet elementum purus. Vivamus vitae mi id tellus sodales rutrum."
     },
     {
         name : "Pine Forest",
         image : "https://farm9.staticflickr.com/8438/7968780788_e567047910.jpg",
-        description : "A lot of shadow"
+        description : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam mauris urna, pretium non metus vitae, auctor aliquam nibh. Sed ut mauris auctor, pretium diam at, posuere libero. Nullam finibus libero est, sed faucibus neque lobortis ut. Sed mi ipsum, congue in placerat non, vestibulum sit amet est. Maecenas ac dui vitae risus dignissim facilisis ac at ipsum. Donec gravida eleifend auctor. Pellentesque sit amet elementum purus. Vivamus vitae mi id tellus sodales rutrum."
     }
 ]
 
