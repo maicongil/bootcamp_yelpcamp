@@ -4,7 +4,8 @@ var express = require("express"),
     bodyParser = require("body-parser"),
     mongoose = require("mongoose"),
     passport = require("passport"),
-    LocalStrategy = require("passport-local");
+    LocalStrategy = require("passport-local"),
+    methodOverride = require("method-override");
 //END LIBS IMPORT
 
 var port = process.env.PORT || 8000,
@@ -49,6 +50,8 @@ app.use(function(req, res, next){
     res.locals.currentUser = req.user;
     next();
 });
+
+app.use(methodOverride("_method"));
 
 app.use("/", indexRoutes);
 app.use("/campgrounds", campgroundRoutes);
