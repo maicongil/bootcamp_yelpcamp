@@ -1,91 +1,59 @@
+//LIBS IMPORT
 var express = require("express"),
     app = express(),
     bodyParser = require("body-parser"),
     mongoose = require("mongoose"),
-    Campground = require("./models/campground.js"),
-    Comment = require("./models/comment.js"),
-    seed = require("./seed.js");
+    passport = require("passport"),
+    LocalStrategy = require("passport-local");
+//END LIBS IMPORT
 
-mongoose.connect("mongodb://localhost/yelp_camp");
-seed();
+var port = process.env.PORT || 8000,
+    mongoUrl = process.env.MONGO_URL || "mongodb://localhost/yelp_camp";
+
+//MODELS IMPORT
+var Campground = require("./models/campground.js"),
+    Comment = require("./models/comment.js"),
+    User = require("./models/user.js");
+//END MODELS IMPORT
+
+//ROUTES IMPORT
+var indexRoutes = require("./routes/index.js"),
+    campgroundRoutes = require("./routes/campground.js"),
+    commentRoutes = require("./routes/comment.js");
+//END ROUTES IMPORT
+
+//DATABASE SEED IMPORT
+var seedDB = require("./seed.js");
+
+mongoose.connect(mongoUrl);
+// seedDB();
 app.use(bodyParser.urlencoded({extended : true}));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
 
-app.get("/", function(req, res){
-    res.render("landing");
+app.use(require("express-session")({
+    secret : "Ruffy and Scooby",
+    resave : false,
+    saveUninitialized :false
+}));
+
+//PASSPORT CONFIG
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+//END PASSPORT CONFIG
+
+app.use(function(req, res, next){
+    res.locals.currentUser = req.user;
+    next();
 });
 
-app.get("/campgrounds", function(req, res){
-    Campground.find({}, function(error, campgrounds){
-        if(error){
-            console.log(error);
-        }else{
-            res.render("campgrounds/index", {campgrounds : campgrounds});
-        }
-    });
-});
+app.use("/", indexRoutes);
+app.use("/campgrounds", campgroundRoutes);
+app.use("/campgrounds/:id/comments", commentRoutes);
 
-app.post("/campgrounds", function(req, res){
-    var name = req.body.name;
-    var image = req.body.image;
-    var description = req.body.description;
-    var newCampground = {name : name, image : image, description : description};
-    
-    Campground.create(
-        newCampground, function(error, campground){
-        if(error){
-            console.log(error);
-        }else{
-            res.redirect("/campgrounds");
-        }
-    });
-});
-
-app.get("/campgrounds/new", function(req, res){
-    res.render("campgrounds/new");
-})
-
-app.get("/campgrounds/:id", function(req, res){
-    Campground.findById(req.params.id).populate("comments").exec(function(error, campground){
-        if(error){
-            console.log(error);
-        }else{
-            console.log(campground);
-            res.render("campgrounds/show", {campground : campground});
-        }
-    });
-});
-
-app.get("/campgrounds/:id/comments/new", function(req, res){
-     Campground.findById(req.params.id, function(error, campground){
-        if(error){
-            console.log(error);
-        }else{
-            console.log(campground);
-            res.render("comments/new", {campground : campground});
-        }
-    });
-});
-
-app.post("/campgrounds/:id/comments", function(req, res){
-     Campground.findById(req.params.id, function(error, campground){
-        if(error){
-            console.log(error);
-        }else{
-            Comment.create(req.body.comment, function(error, comment){
-                if(error){
-                    console.log(error);
-                }else{
-                    campground.comments.push(comment);
-                    campground.save();
-                    res.redirect("/campgrounds/"+ campground._id);
-                }
-            });
-        }
-    });
-});
-
-app.listen("8080", function(){
+app.listen(port, function(){
     console.log("The YelpCamp server has started!");
 });
