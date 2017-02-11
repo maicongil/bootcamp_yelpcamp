@@ -5,7 +5,8 @@ var express = require("express"),
     mongoose = require("mongoose"),
     passport = require("passport"),
     LocalStrategy = require("passport-local"),
-    methodOverride = require("method-override");
+    methodOverride = require("method-override"),
+    flash = require("connect-flash");
 //END LIBS IMPORT
 
 var port = process.env.PORT || 8000,
@@ -38,6 +39,8 @@ app.use(require("express-session")({
     saveUninitialized :false
 }));
 
+app.use(flash());
+
 //PASSPORT CONFIG
 app.use(passport.initialize());
 app.use(passport.session());
@@ -48,6 +51,8 @@ passport.deserializeUser(User.deserializeUser());
 
 app.use(function(req, res, next){
     res.locals.currentUser = req.user;
+    res.locals.error = req.flash("error");
+    res.locals.success = req.flash("success");
     next();
 });
 
